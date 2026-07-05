@@ -1,0 +1,188 @@
+---
+import * as Lucide from "lucide-react";
+import WorkSection from "@/components/WorkSection";
+import "@/styles/global.css";
+
+const { ArrowUpRight, Mail } = Lucide;
+
+const logos = [
+  { src: "/assets/logo-economist.png", alt: "The Economist", width: 147, height: 17 },
+  { src: "/assets/logo-prada.png", alt: "Prada", width: 89, height: 14 },
+  { src: "/assets/logo-vogue.png", alt: "Vogue", width: 70, height: 18 },
+  { src: "/assets/logo-ferrari.png", alt: "Ferrari", width: 97, height: 19 },
+  { src: "/assets/logo-dazed.png", alt: "Dazed", width: 84, height: 20 },
+  { src: "/assets/logo-extra.png", alt: "Selected client", width: 118, height: 19 },
+];
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Adriana Coppola is a creative business strategist building real-world strategy for founders, CEOs and C-suites."
+    />
+    <title>Adriana Coppola</title>
+    <link
+      rel="preload"
+      href="/fonts/Mori/PPMori-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href="/assets/adriana-portrait.png" as="image" />
+  </head>
+  <body>
+    <div class="site-grid" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand-link" href="#top" aria-label="Adriana Coppola home">
+        Adriana Coppola
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#approach">Approach</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero-section" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">
+            Strategy for the real world.
+            <span>Not the boardroom.</span>
+          </h1>
+          <p>
+            Measured in new products, new revenue, and returns that compound for years
+            after launch.
+          </p>
+          <div class="client-strip" aria-label="Selected clients">
+            <p>Selected clients</p>
+            <div class="logo-marquee">
+              <div class="logo-track">
+                {[...logos, ...logos].map((logo, index) => (
+                  <img
+                    src={logo.src}
+                    alt={index < logos.length ? logo.alt : ""}
+                    width={logo.width}
+                    height={logo.height}
+                    loading="eager"
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <figure class="hero-media">
+          <img
+            src="/assets/adriana-portrait.png"
+            alt="Black-and-white portrait of Adriana Coppola"
+            width="646"
+            height="451"
+          />
+        </figure>
+      </section>
+
+      <section class="judgement-section" data-judgement aria-label="Judgement">
+        <div class="judgement-sticky">
+          <p>
+            <span class="judgement-part" style="--start: 0.05">As AI floods the world with cheap advice and average output,</span>
+            <span class="judgement-part" style="--start: 0.18">the rarest skill is the one it cannot copy: <em>judgment.</em></span>
+            <span class="judgement-part" style="--start: 0.34">Knowing what matters before everyone else optimises what doesn’t.</span>
+          </p>
+        </div>
+      </section>
+
+      <section id="approach" class="approach-section" aria-labelledby="approach-title">
+        <p class="section-label">APPROACH</p>
+        <h2 id="approach-title">
+          Living strategy.
+          <span>Not deck strategy.</span>
+        </h2>
+        <p class="approach-intro">
+          I work across four disciplines that usually sit in four separate firms:
+          culture, brand, management consultancy and growth. The most valuable
+          opportunities live in the overlap, where founders, CEOs and C-suites make
+          those decisions.
+        </p>
+
+        <div class="principles">
+          <article>
+            <h3>Peripheral vision</h3>
+            <p>
+              I find value where no one else is looking: at the edge of the business,
+              out in culture, in how people really behave.
+            </p>
+          </article>
+          <article>
+            <h3>Commercial nerve</h3>
+            <p>
+              I don’t stop at the idea. I turn it into revenue, retention and numbers
+              a C-suite can take to the board.
+            </p>
+          </article>
+          <article>
+            <h3>A builder’s hand</h3>
+            <p>
+              I ship. Real products and revenue streams that launch, endure, and keep
+              paying out.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="work" class="work-section" aria-labelledby="work-title">
+        <p class="section-label">WORK</p>
+        <h2 id="work-title" class="visually-hidden">Selected work</h2>
+        <WorkSection client:visible />
+      </section>
+    </main>
+
+    <footer id="contact" class="site-footer" aria-labelledby="contact-title">
+      <p id="contact-title" class="section-label">CONTACT</p>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
+          <span class="linkedin-mark" aria-hidden="true">in</span>
+          Linkedin
+          <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2.2} />
+        </a>
+        <a href="mailto:hello@adrianacoppola.com">
+          <Mail aria-hidden="true" size={18} strokeWidth={2.2} />
+          Email
+          <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2.2} />
+        </a>
+      </div>
+    </footer>
+
+    <script is:inline>
+      (() => {
+        const section = document.querySelector("[data-judgement]");
+        if (!section) return;
+
+        let ticking = false;
+        section.setAttribute("data-enhanced", "true");
+
+        const update = () => {
+          const rect = section.getBoundingClientRect();
+          const start = window.innerHeight * 1.05;
+          const travel = rect.height + window.innerHeight * 0.18;
+          const progress = Math.min(1, Math.max(0, (start - rect.top) / travel));
+          section.style.setProperty("--judgement-progress", progress.toFixed(3));
+          ticking = false;
+        };
+
+        const requestUpdate = () => {
+          if (ticking) return;
+          ticking = true;
+          window.requestAnimationFrame(update);
+        };
+
+        update();
+        window.addEventListener("scroll", requestUpdate, { passive: true });
+        window.addEventListener("resize", requestUpdate);
+      })();
+    </script>
+  </body>
+</html>

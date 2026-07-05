@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.npm-cache/
+.npm-logs/
+screenshots/
+.DS_Store
