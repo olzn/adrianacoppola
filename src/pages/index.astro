@@ -13,6 +13,23 @@ const logos = [
   { src: "/assets/logo-dazed.png", alt: "Dazed", width: 84, height: 20 },
   { src: "/assets/logo-extra.png", alt: "Selected client", width: 118, height: 19 },
 ];
+
+const judgementParts = [
+  { text: "As AI floods the world with cheap advice and average output," },
+  { text: "the rarest skill is the one it cannot copy:" },
+  { text: "judgement.", emphasised: true },
+  { text: "Knowing what matters before everyone else optimises what doesn’t." },
+];
+
+const judgementWords = judgementParts.flatMap((part) =>
+  part.text.split(" ").map((word) => ({
+    emphasised: Boolean(part.emphasised),
+    text: word,
+  })),
+);
+
+const judgementText = judgementParts.map((part) => part.text).join(" ");
+const judgementLastIndex = judgementWords.length - 1;
 ---
 
 <!doctype html>
@@ -36,7 +53,7 @@ const logos = [
   </head>
   <body>
     <div class="site-grid" aria-hidden="true"></div>
-    <header class="site-header">
+    <header class="site-header" data-site-header data-scrolled="false">
       <a class="brand-link" href="#top" aria-label="Adriana Coppola home">
         Adriana Coppola
       </a>
@@ -85,20 +102,10 @@ const logos = [
         </figure>
       </section>
 
-      <section class="judgement-section" data-judgement aria-label="Judgement">
-        <div class="judgement-sticky">
-          <p>
-            <span class="judgement-part" style="--start: 0.05">As AI floods the world with cheap advice and average output,</span>
-            <span class="judgement-part" style="--start: 0.18">the rarest skill is the one it cannot copy: <em>judgment.</em></span>
-            <span class="judgement-part" style="--start: 0.34">Knowing what matters before everyone else optimises what doesn’t.</span>
-          </p>
-        </div>
-      </section>
-
       <section id="approach" class="approach-section" aria-labelledby="approach-title">
         <p class="section-label">APPROACH</p>
         <h2 id="approach-title">
-          Living strategy.
+          Living strategy.{" "}
           <span>Not deck strategy.</span>
         </h2>
         <p class="approach-intro">
@@ -133,10 +140,44 @@ const logos = [
         </div>
       </section>
 
+      <section class="judgement-section" data-judgement aria-label="Judgement">
+        <div class="judgement-sticky">
+          <p aria-label={judgementText}>
+            <span class="judgement-words" aria-hidden="true">
+              {judgementWords.map((word, index) => {
+                const wordStart = judgementLastIndex > 0
+                  ? (index / judgementLastIndex) * 0.76
+                  : 0;
+
+                return (
+                  <span
+                    class="judgement-word"
+                    data-judgement-word
+                    data-last={index === judgementLastIndex ? "true" : "false"}
+                    style={`--word-start: ${wordStart.toFixed(3)}`}
+                  >
+                    {word.emphasised ? <em>{word.text}</em> : word.text}
+                  </span>
+                );
+              })}
+            </span>
+          </p>
+        </div>
+      </section>
+
       <section id="work" class="work-section" aria-labelledby="work-title">
-        <p class="section-label">WORK</p>
-        <h2 id="work-title" class="visually-hidden">Selected work</h2>
-        <WorkSection client:visible />
+        <div class="work-heading">
+          <p class="section-label">WORK</p>
+          <h2 id="work-title">
+            Selected work.{" "}
+            <span>Strategy made visible.</span>
+          </h2>
+          <p class="work-intro">
+            From subscription growth to AI trust, culture-led product and luxury
+            market momentum.
+          </p>
+        </div>
+        <WorkSection client:load />
       </section>
     </main>
 
@@ -158,17 +199,33 @@ const logos = [
 
     <script is:inline>
       (() => {
+        const header = document.querySelector("[data-site-header]");
+        if (!header) return;
+
+        const syncHeader = () => {
+          header.setAttribute("data-scrolled", String(window.scrollY > 12));
+        };
+
+        syncHeader();
+        window.addEventListener("scroll", syncHeader, { passive: true });
+      })();
+
+      (() => {
         const section = document.querySelector("[data-judgement]");
         if (!section) return;
 
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
         let ticking = false;
         section.setAttribute("data-enhanced", "true");
 
         const update = () => {
           const rect = section.getBoundingClientRect();
-          const start = window.innerHeight * 1.05;
-          const travel = rect.height + window.innerHeight * 0.18;
-          const progress = Math.min(1, Math.max(0, (start - rect.top) / travel));
+          const travel = Math.max(1, section.offsetHeight - window.innerHeight);
+          const revealLead = window.innerHeight * 0.34;
+          const progress = reducedMotion.matches
+            ? 1
+            : Math.min(1, Math.max(0, (revealLead - rect.top) / (travel + revealLead)));
+
           section.style.setProperty("--judgement-progress", progress.toFixed(3));
           ticking = false;
         };
@@ -182,6 +239,7 @@ const logos = [
         update();
         window.addEventListener("scroll", requestUpdate, { passive: true });
         window.addEventListener("resize", requestUpdate);
+        reducedMotion.addEventListener("change", requestUpdate);
       })();
     </script>
   </body>

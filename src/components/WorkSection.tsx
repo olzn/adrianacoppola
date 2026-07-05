@@ -176,31 +176,24 @@ export default function WorkSection() {
         <ul className="work-list">
           {caseStudies.map((study) => (
             <li key={study.id}>
-              <Sheet.Trigger
-                asChild
-                onPress={() => {
-                  setActiveId(study.id);
+              <a
+                className="work-row"
+                href={`?case=${study.id}#work`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  openCase(study);
                 }}
+                onPointerEnter={() => setCursorStudy(study)}
+                onPointerLeave={() => setCursorStudy(null)}
               >
-                <a
-                  className="work-row"
-                  href={`?case=${study.id}#work`}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    openCase(study);
-                  }}
-                  onPointerEnter={() => setCursorStudy(study)}
-                  onPointerLeave={() => setCursorStudy(null)}
-                >
-                  <span className="work-row__index">{study.index}</span>
-                  <span className="work-row__client">{study.client}</span>
-                  <span className="work-row__short">{study.short}</span>
-                  <span className="work-row__result">{study.result}</span>
-                  <span className="work-row__arrow" aria-hidden="true">
-                    <ArrowRight />
-                  </span>
-                </a>
-              </Sheet.Trigger>
+                <span className="work-row__index">{study.index}</span>
+                <span className="work-row__client">{study.client}</span>
+                <span className="work-row__short">{study.short}</span>
+                <span className="work-row__result">{study.result}</span>
+                <span className="work-row__arrow" aria-hidden="true">
+                  <ArrowRight />
+                </span>
+              </a>
             </li>
           ))}
         </ul>
