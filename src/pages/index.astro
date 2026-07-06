@@ -1,18 +1,80 @@
 ---
 import * as Lucide from "lucide-react";
+import HeroCopyEmailButton from "@/components/HeroCopyEmailButton";
+import LogoMarquee from "@/components/LogoMarquee";
 import WorkSection from "@/components/WorkSection";
 import "@/styles/global.css";
 
 const { ArrowUpRight, Mail } = Lucide;
 
 const logos = [
-  { src: "/assets/logo-economist.png", alt: "The Economist", width: 147, height: 17 },
-  { src: "/assets/logo-prada.png", alt: "Prada", width: 89, height: 14 },
-  { src: "/assets/logo-vogue.png", alt: "Vogue", width: 70, height: 18 },
-  { src: "/assets/logo-ferrari.png", alt: "Ferrari", width: 97, height: 19 },
-  { src: "/assets/logo-dazed.png", alt: "Dazed", width: 84, height: 20 },
-  { src: "/assets/logo-extra.png", alt: "Selected client", width: 118, height: 19 },
+  {
+    alt: "The Economist",
+    displayWidth: "9.2rem",
+    height: 17,
+    src: "/assets/logo-economist.png",
+    width: 147,
+  },
+  {
+    alt: "Prada",
+    displayWidth: "5.7rem",
+    height: 14,
+    src: "/assets/logo-prada.png",
+    width: 89,
+  },
+  {
+    alt: "British Vogue",
+    displayWidth: "4.8rem",
+    height: 18,
+    src: "/assets/logo-vogue.png",
+    width: 70,
+  },
+  {
+    alt: "Ferrari",
+    displayWidth: "6.15rem",
+    height: 19,
+    src: "/assets/logo-ferrari.png",
+    width: 97,
+  },
+  {
+    alt: "Dazed Media",
+    displayWidth: "5.4rem",
+    height: 20,
+    src: "/assets/logo-dazed.png",
+    width: 84,
+  },
+  {
+    alt: "Hitachi",
+    displayWidth: "7.4rem",
+    height: 19,
+    src: "/assets/logo-extra.png",
+    width: 118,
+  },
 ];
+
+const rawHeroTitleLines = [
+  [
+    { text: "Strategy" },
+    { text: "for" },
+    { text: "the" },
+    { text: "real world", suffix: ".", highlight: true },
+  ],
+  [
+    { text: "Not" },
+    { text: "the" },
+    { text: "boardroom." },
+  ],
+];
+
+let heroWordIndex = 0;
+const heroTitleLines = rawHeroTitleLines.map((line) =>
+  line.map((word) => ({
+    ...word,
+    delay: `${180 + heroWordIndex++ * 64}ms`,
+  })),
+);
+
+const heroTitleText = "Strategy for the real world. Not the boardroom.";
 
 const judgementParts = [
   { text: "As AI floods the world with cheap advice and average output," },
@@ -36,7 +98,7 @@ const judgementLastIndex = judgementWords.length - 1;
 <html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
       content="Adriana Coppola is a creative business strategist building real-world strategy for founders, CEOs and C-suites."
@@ -67,29 +129,43 @@ const judgementLastIndex = judgementWords.length - 1;
     <main id="top">
       <section class="hero-section" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <h1 id="hero-title">
-            Strategy for the real world.
-            <span>Not the boardroom.</span>
+          <h1 id="hero-title" aria-label={heroTitleText}>
+            {heroTitleLines.map((line, lineIndex) => (
+              <span
+                class:list={[
+                  "hero-title-line",
+                  lineIndex === 1 && "hero-title-secondary",
+                ]}
+                aria-hidden="true"
+              >
+                {line.map((word, wordIndex) => (
+                  <>
+                    <span class="hero-title-word" style={`--reveal-delay: ${word.delay}`}>
+                      {word.highlight ? (
+                        <span class="gradient-wave-text" data-wave-text={word.text}>
+                          {word.text}
+                        </span>
+                      ) : (
+                        word.text
+                      )}
+                      {word.suffix}
+                    </span>
+                    {wordIndex < line.length - 1 && " "}
+                  </>
+                ))}
+              </span>
+            ))}
           </h1>
           <p>
             Measured in new products, new revenue, and returns that compound for years
             after launch.
           </p>
+          <div class="hero-actions">
+            <HeroCopyEmailButton client:load />
+          </div>
           <div class="client-strip" aria-label="Selected clients">
             <p>Selected clients</p>
-            <div class="logo-marquee">
-              <div class="logo-track">
-                {[...logos, ...logos].map((logo, index) => (
-                  <img
-                    src={logo.src}
-                    alt={index < logos.length ? logo.alt : ""}
-                    width={logo.width}
-                    height={logo.height}
-                    loading="eager"
-                  />
-                ))}
-              </div>
-            </div>
+            <LogoMarquee logos={logos} client:load />
           </div>
         </div>
         <figure class="hero-media">
@@ -103,12 +179,12 @@ const judgementLastIndex = judgementWords.length - 1;
       </section>
 
       <section id="approach" class="approach-section" aria-labelledby="approach-title">
-        <p class="section-label">APPROACH</p>
-        <h2 id="approach-title">
+        <p class="section-label" data-reveal style="--reveal-delay: 0ms">APPROACH</p>
+        <h2 id="approach-title" data-reveal style="--reveal-delay: 80ms">
           Living strategy.{" "}
           <span>Not deck strategy.</span>
         </h2>
-        <p class="approach-intro">
+        <p class="approach-intro" data-reveal style="--reveal-delay: 150ms">
           I work across four disciplines that usually sit in four separate firms:
           culture, brand, management consultancy and growth. The most valuable
           opportunities live in the overlap, where founders, CEOs and C-suites make
@@ -116,21 +192,21 @@ const judgementLastIndex = judgementWords.length - 1;
         </p>
 
         <div class="principles">
-          <article>
+          <article data-reveal style="--reveal-delay: 230ms">
             <h3>Peripheral vision</h3>
             <p>
               I find value where no one else is looking: at the edge of the business,
               out in culture, in how people really behave.
             </p>
           </article>
-          <article>
+          <article data-reveal style="--reveal-delay: 300ms">
             <h3>Commercial nerve</h3>
             <p>
               I don’t stop at the idea. I turn it into revenue, retention and numbers
               a C-suite can take to the board.
             </p>
           </article>
-          <article>
+          <article data-reveal style="--reveal-delay: 370ms">
             <h3>A builder’s hand</h3>
             <p>
               I ship. Real products and revenue streams that launch, endure, and keep
@@ -148,15 +224,27 @@ const judgementLastIndex = judgementWords.length - 1;
                 const wordStart = judgementLastIndex > 0
                   ? (index / judgementLastIndex) * 0.76
                   : 0;
+                const wordStartValue = wordStart.toFixed(3);
 
                 return (
                   <span
                     class="judgement-word"
                     data-judgement-word
+                    data-judgement-emphasis={word.emphasised ? "true" : "false"}
                     data-last={index === judgementLastIndex ? "true" : "false"}
-                    style={`--word-start: ${wordStart.toFixed(3)}`}
+                    data-word-start={wordStartValue}
+                    style={`--word-start: ${wordStartValue}`}
                   >
-                    {word.emphasised ? <em>{word.text}</em> : word.text}
+                    {word.emphasised ? (
+                      <em>
+                        <span
+                          class="gradient-wave-text judgement-wave-text"
+                          data-wave-text={word.text}
+                        >
+                          {word.text}
+                        </span>
+                      </em>
+                    ) : word.text}
                   </span>
                 );
               })}
@@ -167,12 +255,12 @@ const judgementLastIndex = judgementWords.length - 1;
 
       <section id="work" class="work-section" aria-labelledby="work-title">
         <div class="work-heading">
-          <p class="section-label">WORK</p>
-          <h2 id="work-title">
+          <p class="section-label" data-reveal style="--reveal-delay: 0ms">WORK</p>
+          <h2 id="work-title" data-reveal style="--reveal-delay: 80ms">
             Selected work.{" "}
             <span>Strategy made visible.</span>
           </h2>
-          <p class="work-intro">
+          <p class="work-intro" data-reveal style="--reveal-delay: 150ms">
             From subscription growth to AI trust, culture-led product and luxury
             market momentum.
           </p>
@@ -182,19 +270,46 @@ const judgementLastIndex = judgementWords.length - 1;
     </main>
 
     <footer id="contact" class="site-footer" aria-labelledby="contact-title">
-      <p id="contact-title" class="section-label">CONTACT</p>
-      <div class="footer-links">
-        <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
-          <span class="linkedin-mark" aria-hidden="true">in</span>
-          Linkedin
-          <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2.2} />
-        </a>
-        <a href="mailto:hello@adrianacoppola.com">
-          <Mail aria-hidden="true" size={18} strokeWidth={2.2} />
-          Email
-          <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2.2} />
-        </a>
+      <div class="footer-primary">
+        <p id="contact-title" class="section-label" data-reveal style="--reveal-delay: 0ms">
+          CONTACT
+        </p>
+        <div class="footer-links">
+          <a
+            href="https://www.linkedin.com/"
+            target="_blank"
+            rel="noreferrer"
+            data-reveal
+            style="--reveal-delay: 90ms"
+          >
+            <span class="linkedin-mark" aria-hidden="true">in</span>
+            LinkedIn
+            <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2.2} />
+          </a>
+          <a href="mailto:hello@adrianacoppola.com" data-reveal style="--reveal-delay: 160ms">
+            <Mail aria-hidden="true" size={18} strokeWidth={2.2} />
+            Email
+            <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2.2} />
+          </a>
+        </div>
       </div>
+      <div class="footer-microgrid" aria-label="Footer details">
+        <section data-reveal style="--reveal-delay: 220ms">
+          <p class="footer-kicker">Availability</p>
+          <p>Open for selected advisory and strategy projects.</p>
+        </section>
+        <section data-reveal style="--reveal-delay: 280ms">
+          <p class="footer-kicker">Best fit</p>
+          <p>Founders, CEOs and teams making high-stakes commercial decisions.</p>
+        </section>
+        <nav aria-label="Footer" data-reveal style="--reveal-delay: 340ms">
+          <p class="footer-kicker">Explore</p>
+          <a href="#work">Selected work</a>
+          <a href="#approach">Approach</a>
+          <a href="#top">Back to top</a>
+        </nav>
+      </div>
+      <p class="footer-wordmark" aria-hidden="true">Adriana Coppola</p>
     </footer>
 
     <script is:inline>
@@ -214,7 +329,12 @@ const judgementLastIndex = judgementWords.length - 1;
         const section = document.querySelector("[data-judgement]");
         if (!section) return;
 
+        const emphasis = section.querySelector("[data-judgement-emphasis='true']");
+        const emphasisStart = Number.parseFloat(
+          emphasis?.getAttribute("data-word-start") || "1",
+        );
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        let waveTriggered = false;
         let ticking = false;
         section.setAttribute("data-enhanced", "true");
 
@@ -227,6 +347,16 @@ const judgementLastIndex = judgementWords.length - 1;
             : Math.min(1, Math.max(0, (revealLead - rect.top) / (travel + revealLead)));
 
           section.style.setProperty("--judgement-progress", progress.toFixed(3));
+
+          if (!waveTriggered && !reducedMotion.matches) {
+            const emphasisReveal = (progress - emphasisStart) * 5.8;
+
+            if (emphasisReveal >= 1) {
+              waveTriggered = true;
+              section.setAttribute("data-judgement-wave", "true");
+            }
+          }
+
           ticking = false;
         };
 
@@ -240,6 +370,81 @@ const judgementLastIndex = judgementWords.length - 1;
         window.addEventListener("scroll", requestUpdate, { passive: true });
         window.addEventListener("resize", requestUpdate);
         reducedMotion.addEventListener("change", requestUpdate);
+      })();
+
+      (() => {
+        const revealItems = Array.from(document.querySelectorAll("[data-reveal]"));
+        if (!revealItems.length) return;
+
+        document.documentElement.setAttribute("data-reveal-ready", "true");
+
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const revealStartedAt = window.performance.now();
+        const heroApproachDelay = 1180;
+        const shouldSequenceAfterHero = !window.location.hash;
+        const reveal = (item) => {
+          if (shouldSequenceAfterHero && !reducedMotion.matches && item.closest("#approach")) {
+            const remainingDelay = heroApproachDelay - (window.performance.now() - revealStartedAt);
+
+            if (remainingDelay > 40) {
+              item.style.setProperty("--reveal-load-delay", `${Math.round(remainingDelay)}ms`);
+            }
+          }
+
+          item.setAttribute("data-revealed", "true");
+        };
+        const revealAll = () => revealItems.forEach(reveal);
+
+        if (reducedMotion.matches || !("IntersectionObserver" in window)) {
+          revealAll();
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              reveal(entry.target);
+              observer.unobserve(entry.target);
+            });
+          },
+          {
+            rootMargin: "0px 0px -14% 0px",
+            threshold: 0.14,
+          },
+        );
+
+        const initialRevealItems = [];
+
+        revealItems.forEach((item) => {
+          const rect = item.getBoundingClientRect();
+          const isVisibleApproachItem =
+            shouldSequenceAfterHero &&
+            item.closest("#approach") &&
+            rect.top < window.innerHeight &&
+            rect.bottom > 0;
+
+          if (isVisibleApproachItem) {
+            initialRevealItems.push(item);
+            return;
+          }
+
+          observer.observe(item);
+        });
+
+        if (initialRevealItems.length) {
+          window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+              initialRevealItems.forEach(reveal);
+            });
+          });
+        }
+
+        reducedMotion.addEventListener("change", (event) => {
+          if (!event.matches) return;
+          revealAll();
+          observer.disconnect();
+        });
       })();
     </script>
   </body>

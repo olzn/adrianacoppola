@@ -2,10 +2,12 @@ export type CaseStudy = {
   id: string;
   index: string;
   client: string;
+  logoDomain: string;
   short: string;
   result: string;
   cursorImage?: string;
   heroImage?: string;
+  heroAlt?: string;
   summary: string;
   details: Array<{
     title: string;
@@ -14,15 +16,63 @@ export type CaseStudy = {
   proof: string[];
 };
 
+type LogoDevOptions = {
+  fallback?: "404" | "monogram";
+  format?: "jpg" | "png" | "webp";
+  greyscale?: boolean;
+  height?: number;
+  retina?: boolean;
+  size?: number;
+  theme?: "auto" | "dark" | "light";
+  width?: number;
+};
+
+const LOGO_DEV_PUBLISHABLE_KEY = "pk_MTG216W8TMSHt4Or5LKBjA";
+
+export const logoDevUrl = (
+  domain: string,
+  {
+    fallback = "404",
+    format = "png",
+    greyscale = false,
+    height,
+    retina = true,
+    size = 128,
+    theme = "light",
+    width,
+  }: LogoDevOptions = {},
+) => {
+  const params = new URLSearchParams({
+    fallback,
+    format,
+    theme,
+    token: LOGO_DEV_PUBLISHABLE_KEY,
+  });
+
+  if (greyscale) params.set("greyscale", "true");
+  if (width && height) {
+    params.set("width", String(width));
+    params.set("height", String(height));
+  } else {
+    params.set("size", String(size));
+  }
+  if (retina) params.set("retina", "true");
+
+  return `https://img.logo.dev/${domain}?${params.toString()}`;
+};
+
 export const caseStudies: CaseStudy[] = [
   {
     id: "the-economist",
     index: "01",
     client: "The Economist",
+    logoDomain: "economist.com",
     short: "Seven readers, one subscriber",
     result: "£1m revenue, 2,400% ROI",
     cursorImage: "/assets/work-economist.png",
     heroImage: "/assets/work-economist.png",
+    heroAlt:
+      "The Economist outdoor billboard reading Right. Left. with the line Know which way is up.",
     summary:
       "A proposition and growth system designed to turn a broad cultural audience into subscribers with a sharper reason to act.",
     details: [
@@ -46,8 +96,9 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "cegid-flow",
-    index: "01",
+    index: "02",
     client: "Cegid Flow",
+    logoDomain: "cegid.com",
     short: "A Fitbit for business",
     result: "Major revenue stream",
     summary:
@@ -73,8 +124,9 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "british-vogue",
-    index: "01",
+    index: "03",
     client: "British Vogue",
+    logoDomain: "vogue.co.uk",
     short: "The editorial eye",
     result: "New businesses built",
     summary:
@@ -100,8 +152,9 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "dazed-media",
-    index: "01",
+    index: "04",
     client: "Dazed Media",
+    logoDomain: "dazedmedia.com",
     short: "Culture as a product",
     result: "Loss-maker repositioned",
     summary:
@@ -127,8 +180,9 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "hitachi",
-    index: "01",
+    index: "05",
     client: "Hitachi",
+    logoDomain: "hitachi.com",
     short: "Trust for AI",
     result: "Global senior buy-in",
     summary:
@@ -154,8 +208,9 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "pixlee-burberry",
-    index: "01",
-    client: "Pixlee & Buberry",
+    index: "06",
+    client: "Pixlee & Burberry",
+    logoDomain: "burberry.com",
     short: "Luxury cues",
     result: "Acquisition driver",
     summary:
@@ -181,8 +236,9 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "prada-churchs",
-    index: "01",
+    index: "07",
     client: "Prada Group / Church’s",
+    logoDomain: "prada.com",
     short: "Heritage to hype",
     result: "Made famous in China",
     summary:
@@ -208,8 +264,9 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "babilou",
-    index: "01",
+    index: "08",
     client: "Babilou",
+    logoDomain: "babilou.com",
     short: "Hidden growth",
     result: "Deal case strengthened",
     summary:
