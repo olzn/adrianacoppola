@@ -197,6 +197,7 @@ html[data-reveal-ready="true"] [data-reveal][data-revealed="true"] {
 }
 
 .site-grid,
+.site-header,
 .approach-section,
 .work-section {
   --grid-width: min(calc(100vw - 2rem), 1312px);
@@ -276,15 +277,11 @@ main,
   position: absolute;
   inset: 0 calc(50% - 50vw);
   z-index: 0;
-  border-bottom: 1px solid var(--grid-line);
-  background:
-    linear-gradient(180deg, rgb(255 255 255 / 88%), rgb(255 255 255 / 72%)),
-    rgb(255 255 255 / 78%);
-  -webkit-backdrop-filter: blur(34px) saturate(1.06) contrast(0.9) brightness(1.08);
-  backdrop-filter: blur(34px) saturate(1.06) contrast(0.9) brightness(1.08);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 84%),
-    0 14px 34px rgb(255 255 255 / 46%);
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
   pointer-events: none;
   transition:
     background var(--duration-normal) var(--ease-default),
@@ -317,6 +314,10 @@ main,
   z-index: 1;
 }
 
+.brand-link {
+  z-index: 2;
+}
+
 .brand-link,
 .site-nav a,
 .footer-links a,
@@ -337,13 +338,32 @@ main,
 }
 
 .site-nav {
-  display: flex;
+  display: grid;
+  grid-template-columns: max-content var(--grid-column);
   align-items: center;
-  gap: clamp(var(--space-8), 5vw, var(--space-20));
+  column-gap: clamp(var(--space-8), 5vw, var(--space-20));
 }
 
 .site-nav a {
   transition: opacity var(--duration-fast) var(--ease-default);
+}
+
+.site-nav a:nth-child(1) {
+  grid-row: 1;
+  grid-column: 1;
+  justify-self: start;
+}
+
+.site-nav a:nth-child(2) {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: start;
+}
+
+.site-nav a:nth-child(3) {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: end;
 }
 
 @media (hover: hover) {
@@ -366,7 +386,7 @@ main,
 
 .hero-copy {
   min-width: 0;
-  padding-top: 4.8rem;
+  padding-top: calc(4.8rem - 20px);
 }
 
 .hero-copy h1 {
@@ -521,7 +541,7 @@ main,
 }
 
 .hero-actions + .client-strip {
-  margin-top: clamp(var(--space-10), 4vw, 3.75rem);
+  margin-top: calc(clamp(var(--space-10), 4vw, 3.75rem) + 32px);
 }
 
 @media (hover: hover) {
@@ -1024,6 +1044,10 @@ main,
   opacity: 0;
 }
 
+.work-list > li[data-case-id="the-economist"]::before {
+  opacity: 1;
+}
+
 .work-list > li::after {
   bottom: 0;
   left: calc(50% - 50vw);
@@ -1369,9 +1393,12 @@ main,
 }
 
 .case-sheet__masthead-media img {
-  width: min(86%, 24rem);
-  max-height: calc(100% - var(--space-5));
-  height: auto;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   filter: saturate(0.98);
 }
 
@@ -1409,36 +1436,36 @@ main,
   position: relative;
   z-index: 2;
   display: grid;
-  gap: var(--space-5);
-  padding: var(--space-6) var(--space-8) var(--space-7);
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-8);
 }
 
 .case-sheet__brand-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .case-sheet__brand-mark {
   display: grid;
-  flex: 0 0 3rem;
   width: 3rem;
   height: 3rem;
   place-items: center;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-sm);
-  background: var(--color-white);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: var(--color-ink);
   font-family: var(--font-display);
   font-size: var(--type-xl);
   line-height: 1;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .case-sheet__brand-mark img {
   width: 100%;
   height: 100%;
-  padding: 0.35rem;
+  padding: 0;
   object-fit: contain;
 }
 
@@ -1450,18 +1477,13 @@ main,
   display: block;
 }
 
-.case-sheet__masthead-label {
-  color: var(--color-muted);
-  font-size: var(--type-xs);
-  line-height: 1;
-}
-
-.case-sheet__masthead-title {
+.case-sheet__brand-name {
+  min-width: 0;
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2.1rem, 1.72rem + 0.95vw, 2.9rem);
+  font-size: 2.05rem;
   font-weight: 400;
-  line-height: 0.98;
+  line-height: 1;
   letter-spacing: 0;
   text-wrap: balance;
 }
@@ -1696,7 +1718,7 @@ main,
   margin: 0;
 }
 
-.footer-kicker {
+.footer-microgrid .footer-kicker {
   margin-bottom: var(--space-4);
   color: rgb(255 255 255 / 42%);
   font-size: var(--type-xs);
@@ -2010,7 +2032,6 @@ main,
     height: 11.75rem;
   }
 
-  .case-sheet__masthead-media img,
   .case-sheet__masthead-placeholder {
     width: min(90%, 18rem);
     max-height: calc(100% - var(--space-5));
@@ -2027,18 +2048,22 @@ main,
   }
 
   .case-sheet__masthead-body {
-    gap: var(--space-4);
+    gap: var(--space-5);
     padding: var(--space-5) var(--space-5) var(--space-5);
   }
 
-  .case-sheet__brand-mark {
-    flex-basis: 2.75rem;
-    width: 2.75rem;
-    height: 2.75rem;
+  .case-sheet__brand-row {
+    gap: var(--space-3);
   }
 
-  .case-sheet__masthead-title {
-    font-size: clamp(2rem, 9vw, 2.55rem);
+  .case-sheet__brand-mark {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .case-sheet__brand-name {
+    font-size: 1.75rem;
+    line-height: 1.02;
   }
 
   .case-sheet__brief {

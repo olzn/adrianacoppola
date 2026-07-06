@@ -380,18 +380,38 @@ const judgementLastIndex = judgementWords.length - 1;
 
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
         const revealStartedAt = window.performance.now();
-        const heroApproachDelay = 1180;
+        // Hero's last entrance ends around 1420ms; this leaves a short handoff gap.
+        const heroApproachDelay = 1500;
         const shouldSequenceAfterHero = !window.location.hash;
+        const approachRevealQueue = new Set();
+        let approachRevealTimer = null;
+
+        const setRevealed = (item) => {
+          item.setAttribute("data-revealed", "true");
+        };
+
+        const flushApproachRevealQueue = () => {
+          approachRevealQueue.forEach(setRevealed);
+          approachRevealQueue.clear();
+          approachRevealTimer = null;
+        };
+
         const reveal = (item) => {
           if (shouldSequenceAfterHero && !reducedMotion.matches && item.closest("#approach")) {
             const remainingDelay = heroApproachDelay - (window.performance.now() - revealStartedAt);
 
             if (remainingDelay > 40) {
-              item.style.setProperty("--reveal-load-delay", `${Math.round(remainingDelay)}ms`);
+              approachRevealQueue.add(item);
+              window.clearTimeout(approachRevealTimer);
+              approachRevealTimer = window.setTimeout(
+                flushApproachRevealQueue,
+                Math.round(remainingDelay),
+              );
+              return;
             }
           }
 
-          item.setAttribute("data-revealed", "true");
+          setRevealed(item);
         };
         const revealAll = () => revealItems.forEach(reveal);
 
@@ -442,6 +462,8 @@ const judgementLastIndex = judgementWords.length - 1;
 
         reducedMotion.addEventListener("change", (event) => {
           if (!event.matches) return;
+          window.clearTimeout(approachRevealTimer);
+          approachRevealQueue.clear();
           revealAll();
           observer.disconnect();
         });

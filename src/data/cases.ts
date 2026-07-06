@@ -72,7 +72,7 @@ export const caseStudies: CaseStudy[] = [
     cursorImage: "/assets/work-economist.png",
     heroImage: "/assets/work-economist.png",
     heroAlt:
-      "The Economist outdoor billboard reading Right. Left. with the line Know which way is up.",
+      "A red The Economist Group poster mounted on a ribbed wall in a gallery-like interior.",
     summary:
       "A proposition and growth system designed to turn a broad cultural audience into subscribers with a sharper reason to act.",
     details: [
@@ -101,6 +101,9 @@ export const caseStudies: CaseStudy[] = [
     logoDomain: "cegid.com",
     short: "A Fitbit for business",
     result: "Major revenue stream",
+    heroImage: "/assets/work-cegid-flow.png",
+    heroAlt:
+      "Cegid Flow product and onboarding screens arranged diagonally on a pale peach background.",
     summary:
       "A business-product strategy that made performance feel visible, trackable and commercially actionable.",
     details: [
@@ -157,6 +160,9 @@ export const caseStudies: CaseStudy[] = [
     logoDomain: "dazedmedia.com",
     short: "Culture as a product",
     result: "Loss-maker repositioned",
+    heroImage: "/assets/work-dazed.png",
+    heroAlt:
+      "A group of people dressed in white holding hands while moving through tall grass.",
     summary:
       "A repositioning that treated culture not as atmosphere, but as a product with a sharper commercial role.",
     details: [

@@ -85,10 +85,8 @@ const CaseMasthead = ({ study }: { study: CaseStudy }) => {
             <img src={logoUrl} alt="" loading="eager" onError={handleLogoError} />
             <span>{clientInitial}</span>
           </span>
-          <span className="case-sheet__masthead-label">Client case study</span>
+          <Sheet.Title className="case-sheet__brand-name">{study.client}</Sheet.Title>
         </div>
-
-        <Sheet.Title className="case-sheet__masthead-title">{study.client}</Sheet.Title>
 
         <dl className="case-sheet__brief">
           <div>
@@ -248,10 +246,13 @@ export default function WorkSection() {
             return (
               <li
                 key={study.id}
+                data-case-id={study.id}
                 data-reveal
-                data-revealed="true"
                 suppressHydrationWarning
-                style={{ "--reveal-delay": `${Math.min(index, 6) * 55}ms` } as CSSProperties}
+                style={{
+                  "--reveal-delay": `${Math.min(index, 6) * 55}ms`,
+                  "--reveal-duration": "360ms",
+                } as CSSProperties}
               >
                 {activeId === study.id ? (
                   <AutoFocusTarget.Root asChild timing="dismiss">

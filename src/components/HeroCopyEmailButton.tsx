@@ -79,7 +79,10 @@ export default function HeroCopyEmailButton() {
       <span className="hero-copy-email__label" aria-live="polite">
         <SlotText
           text={label}
-          options={{ direction: copied ? "up" : "down" }}
+          options={{
+            direction: copied ? "up" : "down",
+            skipUnchanged: false,
+          }}
         />
       </span>
     </RichButton>
