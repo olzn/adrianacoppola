@@ -1720,7 +1720,7 @@ main,
 }
 
 .footer-microgrid::before {
-  top: 0;
+  top: calc(var(--space-4) + var(--type-xs));
 }
 
 .footer-microgrid::after {
