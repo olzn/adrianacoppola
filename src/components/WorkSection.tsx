@@ -133,6 +133,59 @@ const CaseEvidence = ({ study }: { study: CaseStudy }) => (
   </section>
 );
 
+const CaseStory = ({ study }: { study: CaseStudy }) => {
+  const orderedSections = [...(study.story ?? [])].sort(
+    (a, b) => Number(b.type === "outcomes") - Number(a.type === "outcomes"),
+  );
+
+  return (
+    <div className="case-sheet__story">
+      {orderedSections.map((section) => {
+        if (section.type === "outcomes") {
+          return (
+            <section
+              key={section.title}
+              className="case-sheet__story-section case-sheet__story-section--outcomes"
+              aria-label="Results"
+            >
+              <ul className="case-sheet__outcomes">
+                {section.items.map((item) => (
+                  <li key={item}>
+                    <img src="/assets/check-3.svg" alt="" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          );
+        }
+
+        return (
+          <section key={section.title} className="case-sheet__story-section">
+            <h3>{section.title}</h3>
+            {section.type === "text" && section.headline ? <h4>{section.headline}</h4> : null}
+            <div className="case-sheet__story-copy">
+              {section.type === "list" ? (
+                <>
+                  {section.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  <ul>
+                    {section.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                  {section.outro?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                </>
+              ) : (
+                section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+              )}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  );
+};
+
 const CaseSheet = ({
   activeStudy,
   presented,
@@ -169,21 +222,29 @@ const CaseSheet = ({
 
                   <AutoFocusTarget.Root timing="present" className="case-sheet__focus" />
                   <section className="case-sheet__intro">
+                    {activeStudy?.discipline ? (
+                      <p className="case-sheet__discipline">{activeStudy.discipline}</p>
+                    ) : null}
                     <Sheet.Description className="case-sheet__summary">
                       {activeStudy?.summary}
                     </Sheet.Description>
                   </section>
 
-                  {activeStudy ? <CaseEvidence study={activeStudy} /> : null}
-
-                  <div className="case-sheet__sections">
-                    {activeStudy?.details.map((section) => (
-                      <section key={section.title}>
-                        <h3>{section.title}</h3>
-                        <p>{section.body}</p>
-                      </section>
-                    ))}
-                  </div>
+                  {activeStudy?.story ? (
+                    <CaseStory study={activeStudy} />
+                  ) : (
+                    <>
+                      {activeStudy ? <CaseEvidence study={activeStudy} /> : null}
+                      <div className="case-sheet__sections">
+                        {activeStudy?.details.map((section) => (
+                          <section key={section.title}>
+                            <h3>{section.title}</h3>
+                            <p>{section.body}</p>
+                          </section>
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </Scroll.Content>
               </Scroll.View>
             </div>
