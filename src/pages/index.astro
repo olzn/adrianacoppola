@@ -5,7 +5,7 @@ import LogoMarquee from "@/components/LogoMarquee";
 import WorkSection from "@/components/WorkSection";
 import "@/styles/global.css";
 
-const { ArrowUpRight, Mail } = Lucide;
+const { ArrowUpRight } = Lucide;
 
 const logos = [
   {
@@ -180,8 +180,7 @@ const judgementLastIndex = judgementWords.length - 1;
             ))}
           </h1>
           <p class="hero-intro">
-            I turn overlooked opportunities into new products, revenue streams and business
-            models.
+            I convert blind spots into breakthroughs, new products, and revenue streams.
           </p>
           <div class="hero-actions">
             <HeroCopyEmailButton client:load />
@@ -204,7 +203,10 @@ const judgementLastIndex = judgementWords.length - 1;
       <section id="approach" class="approach-section" aria-labelledby="approach-title">
         <p class="section-label" data-reveal style="--reveal-delay: 0ms">APPROACH</p>
         <h2 id="approach-title" data-reveal style="--reveal-delay: 80ms">
-          Creative leaps. Commercial landings.
+          Creative leaps.{" "}
+          <span class="gradient-wave-text" data-wave-text="Commercial landings.">
+            Commercial landings.
+          </span>
         </h2>
         <div class="approach-intro" data-reveal style="--reveal-delay: 150ms">
           <p>
@@ -286,7 +288,10 @@ const judgementLastIndex = judgementWords.length - 1;
         <div class="work-heading">
           <p class="section-label" data-reveal style="--reveal-delay: 0ms">WORK</p>
           <h2 id="work-title" data-reveal style="--reveal-delay: 80ms">
-            Built from the blind spot.
+            Built from the{" "}
+            <span class="gradient-wave-text" data-wave-text="blind spot.">
+              blind spot.
+            </span>
           </h2>
           <p class="work-intro" data-reveal style="--reveal-delay: 150ms">
             New products, propositions and revenue streams, with adoption, uplift and
@@ -310,12 +315,26 @@ const judgementLastIndex = judgementWords.length - 1;
             data-reveal
             style="--reveal-delay: 90ms"
           >
-            <span class="linkedin-mark" aria-hidden="true">in</span>
+            <img
+              class="footer-link-icon"
+              src="/assets/icon-linkedin.svg"
+              alt=""
+              width="32"
+              height="32"
+              aria-hidden="true"
+            />
             LinkedIn
             <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2.2} />
           </a>
           <a href="mailto:adriana.c.coppola@gmail.com" data-reveal style="--reveal-delay: 160ms">
-            <Mail aria-hidden="true" size={18} strokeWidth={2.2} />
+            <img
+              class="footer-link-icon"
+              src="/assets/icon-at-sign.svg"
+              alt=""
+              width="12"
+              height="12"
+              aria-hidden="true"
+            />
             Email
             <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2.2} />
           </a>

@@ -672,11 +672,6 @@ main,
   animation-name: spell-marquee-scroll-y-reverse;
 }
 
-.spell-marquee[data-pause-on-hover="true"]:hover .spell-marquee__scroller,
-.spell-marquee__scroller.is-paused {
-  animation-play-state: paused;
-}
-
 .spell-marquee__item {
   display: flex;
   flex: 0 0 auto;
@@ -1012,6 +1007,11 @@ main,
 .work-heading h2 span {
   display: inline;
   color: var(--color-muted);
+}
+
+.approach-section h2 span.gradient-wave-text,
+.work-heading h2 span.gradient-wave-text {
+  color: var(--color-black);
 }
 
 .work-intro {
@@ -1703,23 +1703,32 @@ main,
   font-family: var(--font-display);
   font-size: var(--type-lg);
   line-height: 1;
-  transition: opacity var(--duration-fast) var(--ease-default);
+  transition:
+    opacity var(--duration-fast) var(--ease-default),
+    transform var(--duration-normal) var(--ease-default);
 }
 
-.linkedin-mark {
-  display: grid;
+.footer-link-icon {
+  display: block;
+  flex: 0 0 auto;
   width: 1.125rem;
   height: 1.125rem;
-  place-items: center;
-  border: 1.5px solid currentColor;
-  font-family: var(--font-body);
-  font-size: 0.625rem;
-  font-weight: 600;
-  line-height: 1;
 }
 
 .footer-links a svg:last-child {
   opacity: 0.58;
+  transition: transform var(--duration-normal) var(--ease-default);
+}
+
+@media (hover: hover) {
+  .footer-links a:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  .footer-links a:hover svg:last-child {
+    transform: translate(2px, -2px);
+  }
 }
 
 .footer-microgrid {
@@ -1796,7 +1805,7 @@ main,
   max-width: 22rem;
   color: var(--color-white);
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 1.35vw, 1.55rem);
+  font-size: var(--type-base);
   line-height: 1.08;
   text-wrap: balance;
 }

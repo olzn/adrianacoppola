@@ -2,12 +2,15 @@
 
 import {
   Children,
-  useState,
+  useEffect,
+  useRef,
   type CSSProperties,
   type HTMLAttributes,
   type MouseEvent,
   type ReactNode,
 } from "react";
+
+const RATE_TRANSITION_MS = 320;
 
 type MarqueeDirection = "left" | "right" | "up" | "down";
 
@@ -40,7 +43,8 @@ export function Marquee({
   onMouseLeave,
   ...props
 }: MarqueeProps) {
-  const [isPaused, setIsPaused] = useState(false);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const rateFrameRef = useRef<number | null>(null);
   const items = Children.toArray(children);
   const isVertical = direction === "up" || direction === "down";
   const fadeMask = isVertical
@@ -62,14 +66,50 @@ export function Marquee({
       : null),
   };
 
+  useEffect(() => () => {
+    if (rateFrameRef.current !== null) cancelAnimationFrame(rateFrameRef.current);
+  }, []);
+
+  const transitionPlaybackRate = (targetRate: 0 | 1) => {
+    const animation = scrollerRef.current?.getAnimations()[0];
+    if (!animation) return;
+
+    if (rateFrameRef.current !== null) cancelAnimationFrame(rateFrameRef.current);
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      animation.updatePlaybackRate(targetRate);
+      return;
+    }
+
+    const initialRate = animation.playbackRate;
+    const startedAt = performance.now();
+    animation.play();
+
+    const updateRate = (now: number) => {
+      const progress = Math.min((now - startedAt) / RATE_TRANSITION_MS, 1);
+      const easedProgress = progress * progress * (3 - 2 * progress);
+      animation.updatePlaybackRate(
+        initialRate + (targetRate - initialRate) * easedProgress,
+      );
+
+      if (progress < 1) {
+        rateFrameRef.current = requestAnimationFrame(updateRate);
+      } else {
+        rateFrameRef.current = null;
+      }
+    };
+
+    rateFrameRef.current = requestAnimationFrame(updateRate);
+  };
+
   const handleMouseEnter = (event: MouseEvent<HTMLDivElement>) => {
     onMouseEnter?.(event);
-    if (pauseOnHover) setIsPaused(true);
+    if (pauseOnHover) transitionPlaybackRate(0);
   };
 
   const handleMouseLeave = (event: MouseEvent<HTMLDivElement>) => {
     onMouseLeave?.(event);
-    if (pauseOnHover) setIsPaused(false);
+    if (pauseOnHover) transitionPlaybackRate(1);
   };
 
   return (
@@ -83,10 +123,10 @@ export function Marquee({
       {...props}
     >
       <div
+        ref={scrollerRef}
         className={joinClassNames(
           "spell-marquee__scroller",
           isVertical && "spell-marquee__scroller--vertical",
-          isPaused && "is-paused",
         )}
       >
         {items.map((item, index) => (
