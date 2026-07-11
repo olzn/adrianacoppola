@@ -100,7 +100,7 @@ export const caseStudies: CaseStudy[] = [
     client: "Cegid Flow",
     logoDomain: "cegid.com",
     short: "A Fitbit for business",
-    result: "Major revenue stream",
+    result: "Unlocked new B2C market",
     heroImage: "/assets/work-cegid-flow.png",
     heroAlt:
       "Cegid Flow product and onboarding screens arranged diagonally on a pale peach background.",
@@ -130,8 +130,8 @@ export const caseStudies: CaseStudy[] = [
     index: "03",
     client: "British Vogue",
     logoDomain: "vogue.co.uk",
-    short: "The editorial eye",
-    result: "New businesses built",
+    short: "Selling the editorial eye",
+    result: "Suite of new revenue streams",
     summary:
       "A way to turn editorial authority into repeatable business opportunities without flattening the brand.",
     details: [
@@ -217,8 +217,8 @@ export const caseStudies: CaseStudy[] = [
     index: "06",
     client: "Pixlee & Burberry",
     logoDomain: "burberry.com",
-    short: "Luxury signals",
-    result: "New high-value revenue line",
+    short: "The language of luxury",
+    result: "New monetisation model",
     summary:
       "A positioning and value story that connected platform capability with the commercial signals luxury buyers care about.",
     details: [

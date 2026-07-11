@@ -863,9 +863,17 @@ main,
   margin-inline-end: 0;
 }
 
+.judgement-word[data-sans-punctuation="true"] {
+  font-family: var(--font-body);
+}
+
 .judgement-word[data-judgement-emphasis="true"] {
   font-family: var(--font-display);
   font-weight: 400;
+}
+
+.judgement-word[data-judgement-emphasis="true"] em {
+  font-style: normal;
 }
 
 .judgement-wave-text::after {

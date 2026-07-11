@@ -101,7 +101,11 @@ const heroTitleText = "Thinking outside the model";
 const judgementParts = [
   {
     emphasised: false,
-    text: "AI can make every business smarter – and more alike. Advantage lies in what the pattern leaves out: human contradiction, cultural change, and the nerve to build what has no precedent.",
+    text: "AI can make every business smarter — and more alike. Advantage lies in what the pattern leaves out: human contradiction, cultural change, and the nerve to",
+  },
+  {
+    emphasised: true,
+    text: "build what has no precedent.",
   },
 ];
 
@@ -214,34 +218,36 @@ const judgementLastIndex = judgementWords.length - 1;
             exist.
           </p>
           <p>
-            I go into the real world, into subcultures, microcommunities and the cultural
-            margins, to find the opportunities others miss.
+            I go into the real world—subcultures, microcommunities and the cultural margins—to
+            find missed opportunities.
           </p>
           <p>
-            I pitch the thinking, build the prototype and get it to market: a new product,
-            revenue stream or business model. I measure, optimise and deliver proven ROI.
+            I pitch the thinking, build the prototype and get it into market: a new product,
+            revenue stream or business model. I measure, optimise and have a proven track
+            record for ROI.
           </p>
         </div>
 
         <div class="principles">
           <article data-reveal style="--reveal-delay: 230ms">
             <p>
-              <span>I find signals beyond the echo chamber.</span>
-              Real behaviour, microcommunities and pioneers in other categories reveal where
-              the mainstream is being shaped before it knows it.
+              <span>01 — Cultural periphery</span>
+              I look to real behaviour, micro-communities and pioneers beyond the category—where
+              the mainstream is made before it is named.
             </p>
           </article>
           <article data-reveal style="--reveal-delay: 300ms">
             <p>
-              <span>I connect ideas across categories.</span>
-              That is where the creative leap happens and where new opportunity appears.
+              <span>02 — Category collision</span>
+              I bring together ideas, behaviours and industries that rarely meet. That is
+              where the leap happens—and new value appears.
             </p>
           </article>
           <article data-reveal style="--reveal-delay: 370ms">
             <p>
-              <span>I turn ideas into commercial proof.</span>
-              Products, propositions and revenue streams measured in adoption, uplift and
-              cash, not recommendations left in a deck.
+              <span>03 — Commercial reality</span>
+              I pitch the idea, build the prototype and take it to market. The work is measured
+              in adoption, uplift and revenue.
             </p>
           </article>
         </div>
@@ -262,6 +268,7 @@ const judgementLastIndex = judgementWords.length - 1;
                     class="judgement-word"
                     data-judgement-word
                     data-judgement-emphasis={word.emphasised ? "true" : "false"}
+                    data-sans-punctuation={word.text === "—" ? "true" : undefined}
                     data-last={index === judgementLastIndex ? "true" : "false"}
                     data-word-start={wordStartValue}
                     style={`--word-start: ${wordStartValue}`}
@@ -294,8 +301,8 @@ const judgementLastIndex = judgementWords.length - 1;
             </span>
           </h2>
           <p class="work-intro" data-reveal style="--reveal-delay: 150ms">
-            New products, propositions and revenue streams, with adoption, uplift and
-            longevity to show for them.
+            From subscription growth to enterprise AI, culture-led products and new markets.
+            Built, adopted and still creating value—not recommendations left in a deck.
           </p>
         </div>
         <WorkSection client:load />
