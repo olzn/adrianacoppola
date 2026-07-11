@@ -2,13 +2,32 @@ import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties, SyntheticEvent } from "react";
 import * as Lucide from "lucide-react";
 import { AutoFocusTarget, Scroll, Sheet, useClientMediaQuery } from "@silk-hq/components";
-import { caseStudies, findCaseStudy, logoDevUrl, type CaseStudy } from "@/data/cases";
+import { caseStudies, logoDevUrl, type CaseStudy } from "@/data/cases";
 
 const { ArrowRight, X } = Lucide;
 
+const visibleCaseIds = [
+  "the-economist",
+  "cegid-flow",
+  "british-vogue",
+  "pixlee-burberry",
+  "hitachi",
+];
+
+const visibleCaseStudies = visibleCaseIds
+  .map((id) => caseStudies.find((study) => study.id === id))
+  .filter((study): study is CaseStudy => Boolean(study))
+  .map((study, index) => ({
+    ...study,
+    index: String(index + 1).padStart(2, "0"),
+  }));
+
+const findVisibleCaseStudy = (id: string | null | undefined) =>
+  visibleCaseStudies.find((study) => study.id === id) ?? null;
+
 const getCaseFromUrl = () => {
   if (typeof window === "undefined") return null;
-  return findCaseStudy(new URL(window.location.href).searchParams.get("case"));
+  return findVisibleCaseStudy(new URL(window.location.href).searchParams.get("case"));
 };
 
 const replaceCaseParam = (id: string | null) => {
@@ -179,7 +198,7 @@ export default function WorkSection() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [presented, setPresented] = useState(false);
   const [previewId, setPreviewId] = useState<string | null>(null);
-  const activeStudy = useMemo(() => findCaseStudy(activeId), [activeId]);
+  const activeStudy = useMemo(() => findVisibleCaseStudy(activeId), [activeId]);
 
   useEffect(() => {
     const syncFromUrl = () => {
@@ -217,7 +236,7 @@ export default function WorkSection() {
     >
       <div className="work-shell" data-preview-active={previewId ? "true" : "false"}>
         <ul className="work-list">
-          {caseStudies.map((study, index) => {
+          {visibleCaseStudies.map((study, index) => {
             const row = (
               <a
                 className="work-row"

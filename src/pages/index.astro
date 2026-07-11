@@ -11,58 +11,80 @@ const logos = [
   {
     alt: "The Economist",
     displayWidth: "9.2rem",
-    height: 17,
-    src: "/assets/logo-economist.png",
-    width: 147,
+    height: 32,
+    src: "/assets/logo-economist.svg",
+    width: 277,
   },
   {
     alt: "Prada",
     displayWidth: "5.7rem",
-    height: 14,
-    src: "/assets/logo-prada.png",
-    width: 89,
+    height: 354,
+    src: "/assets/logo-prada.svg",
+    width: 2279,
   },
   {
     alt: "British Vogue",
     displayWidth: "4.8rem",
-    height: 18,
-    src: "/assets/logo-vogue.png",
-    width: 70,
+    height: 410,
+    src: "/assets/logo-vogue.svg",
+    width: 1544,
   },
   {
     alt: "Ferrari",
     displayWidth: "6.15rem",
-    height: 19,
-    src: "/assets/logo-ferrari.png",
-    width: 97,
+    height: 21,
+    src: "/assets/logo-ferrari.svg",
+    width: 94,
   },
   {
     alt: "Dazed Media",
     displayWidth: "5.4rem",
-    height: 20,
-    src: "/assets/logo-dazed.png",
-    width: 84,
+    height: 175,
+    src: "/assets/logo-dazed.svg",
+    width: 727,
   },
   {
     alt: "Hitachi",
     displayWidth: "7.4rem",
-    height: 19,
-    src: "/assets/logo-extra.png",
-    width: 118,
+    height: 32,
+    src: "/assets/logo-hitachi.svg",
+    width: 207,
+  },
+  {
+    alt: "Google",
+    displayWidth: "6.2rem",
+    height: 300,
+    src: "/assets/logo-google.svg",
+    width: 948,
+  },
+  {
+    alt: "LVMH",
+    displayWidth: "6.4rem",
+    height: 681,
+    src: "/assets/logo-lvmh.svg",
+    width: 2336,
+  },
+  {
+    alt: "L’Oréal",
+    displayWidth: "6.5rem",
+    height: 145,
+    src: "/assets/logo-loreal.svg",
+    width: 800,
+  },
+  {
+    alt: "Barclays",
+    displayWidth: "6.8rem",
+    height: 66,
+    src: "/assets/logo-barclays.svg",
+    width: 391,
   },
 ];
 
 const rawHeroTitleLines = [
   [
-    { text: "Strategy" },
-    { text: "for" },
-    { text: "the" },
-    { text: "real world", suffix: ".", highlight: true },
-  ],
-  [
-    { text: "Not" },
-    { text: "the" },
-    { text: "boardroom." },
+    { text: "Thinking" },
+    { text: "outside" },
+    { text: "the model", highlight: true },
   ],
 ];
 
@@ -74,13 +96,13 @@ const heroTitleLines = rawHeroTitleLines.map((line) =>
   })),
 );
 
-const heroTitleText = "Strategy for the real world. Not the boardroom.";
+const heroTitleText = "Thinking outside the model";
 
 const judgementParts = [
-  { text: "As AI floods the world with cheap advice and average output," },
-  { text: "the rarest skill is the one it cannot copy:" },
-  { text: "judgement.", emphasised: true },
-  { text: "Knowing what matters before everyone else optimises what doesn’t." },
+  {
+    emphasised: false,
+    text: "AI can make every business smarter, and more alike. Advantage lies in what the pattern leaves out: human contradiction, cultural change, and the nerve to build what has no precedent.",
+  },
 ];
 
 const judgementWords = judgementParts.flatMap((part) =>
@@ -130,6 +152,7 @@ const judgementLastIndex = judgementWords.length - 1;
     <main id="top">
       <section class="hero-section" aria-labelledby="hero-title">
         <div class="hero-copy">
+          <p class="section-label hero-eyebrow">PRODUCT, COMMERCIAL &amp; GROWTH STRATEGY</p>
           <h1 id="hero-title" aria-label={heroTitleText}>
             {heroTitleLines.map((line, lineIndex) => (
               <span
@@ -149,7 +172,6 @@ const judgementLastIndex = judgementWords.length - 1;
                       ) : (
                         word.text
                       )}
-                      {word.suffix}
                     </span>
                     {wordIndex < line.length - 1 && " "}
                   </>
@@ -157,9 +179,9 @@ const judgementLastIndex = judgementWords.length - 1;
               </span>
             ))}
           </h1>
-          <p>
-            Measured in new products, new revenue, and returns that compound for years
-            after launch.
+          <p class="hero-intro">
+            I turn overlooked opportunities into new products, revenue streams and business
+            models.
           </p>
           <div class="hero-actions">
             <HeroCopyEmailButton client:load />
@@ -182,36 +204,42 @@ const judgementLastIndex = judgementWords.length - 1;
       <section id="approach" class="approach-section" aria-labelledby="approach-title">
         <p class="section-label" data-reveal style="--reveal-delay: 0ms">APPROACH</p>
         <h2 id="approach-title" data-reveal style="--reveal-delay: 80ms">
-          Living strategy.{" "}
-          <span>Not deck strategy.</span>
+          Creative leaps. Commercial landings.
         </h2>
-        <p class="approach-intro" data-reveal style="--reveal-delay: 150ms">
-          I work across four disciplines that usually sit in four separate firms:
-          culture, brand, management consultancy and growth. The most valuable
-          opportunities live in the overlap, where founders, CEOs and C-suites make
-          those decisions.
-        </p>
+        <div class="approach-intro" data-reveal style="--reveal-delay: 150ms">
+          <p>
+            AI and benchmarking are good at optimising the known. I work on what does not yet
+            exist.
+          </p>
+          <p>
+            I go into the real world, into subcultures, microcommunities and the cultural
+            margins, to find the opportunities others miss.
+          </p>
+          <p>
+            I pitch the thinking, build the prototype and get it to market: a new product,
+            revenue stream or business model. I measure, optimise and deliver proven ROI.
+          </p>
+        </div>
 
         <div class="principles">
           <article data-reveal style="--reveal-delay: 230ms">
-            <h3>Peripheral vision</h3>
             <p>
-              I find value where no one else is looking: at the edge of the business,
-              out in culture, in how people really behave.
+              <span>I find signals beyond the echo chamber.</span>
+              Real behaviour, microcommunities and pioneers in other categories reveal where
+              the mainstream is being shaped before it knows it.
             </p>
           </article>
           <article data-reveal style="--reveal-delay: 300ms">
-            <h3>Commercial nerve</h3>
             <p>
-              I don’t stop at the idea. I turn it into revenue, retention and numbers
-              a C-suite can take to the board.
+              <span>I connect ideas across categories.</span>
+              That is where the creative leap happens and where new opportunity appears.
             </p>
           </article>
           <article data-reveal style="--reveal-delay: 370ms">
-            <h3>A builder’s hand</h3>
             <p>
-              I ship. Real products and revenue streams that launch, endure, and keep
-              paying out.
+              <span>I turn ideas into commercial proof.</span>
+              Products, propositions and revenue streams measured in adoption, uplift and
+              cash, not recommendations left in a deck.
             </p>
           </article>
         </div>
@@ -258,12 +286,11 @@ const judgementLastIndex = judgementWords.length - 1;
         <div class="work-heading">
           <p class="section-label" data-reveal style="--reveal-delay: 0ms">WORK</p>
           <h2 id="work-title" data-reveal style="--reveal-delay: 80ms">
-            Selected work.{" "}
-            <span>Strategy made visible.</span>
+            Built from the blind spot.
           </h2>
           <p class="work-intro" data-reveal style="--reveal-delay: 150ms">
-            From subscription growth to AI trust, culture-led product and luxury
-            market momentum.
+            New products, propositions and revenue streams, with adoption, uplift and
+            longevity to show for them.
           </p>
         </div>
         <WorkSection client:load />
@@ -277,7 +304,7 @@ const judgementLastIndex = judgementWords.length - 1;
         </p>
         <div class="footer-links">
           <a
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/in/adrianacoppola/"
             target="_blank"
             rel="noreferrer"
             data-reveal
@@ -287,7 +314,7 @@ const judgementLastIndex = judgementWords.length - 1;
             LinkedIn
             <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2.2} />
           </a>
-          <a href="mailto:hello@adrianacoppola.com" data-reveal style="--reveal-delay: 160ms">
+          <a href="mailto:adriana.c.coppola@gmail.com" data-reveal style="--reveal-delay: 160ms">
             <Mail aria-hidden="true" size={18} strokeWidth={2.2} />
             Email
             <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2.2} />

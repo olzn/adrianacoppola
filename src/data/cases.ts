@@ -67,7 +67,7 @@ export const caseStudies: CaseStudy[] = [
     index: "01",
     client: "The Economist",
     logoDomain: "economist.com",
-    short: "Seven readers, one subscriber",
+    short: "Seven readers, one subscription",
     result: "£1m revenue, 2,400% ROI",
     cursorImage: "/assets/work-economist.png",
     heroImage: "/assets/work-economist.png",
@@ -189,7 +189,7 @@ export const caseStudies: CaseStudy[] = [
     index: "05",
     client: "Hitachi",
     logoDomain: "hitachi.com",
-    short: "Trust for AI",
+    short: "Trust without lock-in",
     result: "Global senior buy-in",
     summary:
       "A senior-stakeholder strategy for making AI trust concrete enough to align around and act on.",
@@ -217,8 +217,8 @@ export const caseStudies: CaseStudy[] = [
     index: "06",
     client: "Pixlee & Burberry",
     logoDomain: "burberry.com",
-    short: "Luxury cues",
-    result: "Acquisition driver",
+    short: "Luxury signals",
+    result: "New high-value revenue line",
     summary:
       "A positioning and value story that connected platform capability with the commercial signals luxury buyers care about.",
     details: [
