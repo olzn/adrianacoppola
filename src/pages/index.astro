@@ -101,11 +101,11 @@ const heroTitleText = "Thinking outside the model";
 const judgementParts = [
   {
     emphasised: false,
-    text: "AI can make every business smarter — and more alike. Advantage lies in what the pattern leaves out: human contradiction, cultural change, and the nerve to",
+    text: "AI can make every business smarter — and more alike. Advantage lies in what the pattern leaves out: human contradiction, cultural change, and the nerve",
   },
   {
     emphasised: true,
-    text: "build what has no precedent.",
+    text: "to build what has no precedent.",
   },
 ];
 
@@ -268,21 +268,11 @@ const judgementLastIndex = judgementWords.length - 1;
                     class="judgement-word"
                     data-judgement-word
                     data-judgement-emphasis={word.emphasised ? "true" : "false"}
-                    data-sans-punctuation={word.text === "—" ? "true" : undefined}
                     data-last={index === judgementLastIndex ? "true" : "false"}
                     data-word-start={wordStartValue}
                     style={`--word-start: ${wordStartValue}`}
                   >
-                    {word.emphasised ? (
-                      <em>
-                        <span
-                          class="gradient-wave-text judgement-wave-text"
-                          data-wave-text={word.text}
-                        >
-                          {word.text}
-                        </span>
-                      </em>
-                    ) : word.text}
+                    {word.emphasised ? <em>{word.text}</em> : word.text}
                   </span>
                 );
               })}
@@ -383,12 +373,7 @@ const judgementLastIndex = judgementWords.length - 1;
         const section = document.querySelector("[data-judgement]");
         if (!section) return;
 
-        const emphasis = section.querySelector("[data-judgement-emphasis='true']");
-        const emphasisStart = Number.parseFloat(
-          emphasis?.getAttribute("data-word-start") || "1",
-        );
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-        let waveTriggered = false;
         let ticking = false;
         section.setAttribute("data-enhanced", "true");
 
@@ -401,15 +386,6 @@ const judgementLastIndex = judgementWords.length - 1;
             : Math.min(1, Math.max(0, (revealLead - rect.top) / (travel + revealLead)));
 
           section.style.setProperty("--judgement-progress", progress.toFixed(3));
-
-          if (!waveTriggered && !reducedMotion.matches) {
-            const emphasisReveal = (progress - emphasisStart) * 5.8;
-
-            if (emphasisReveal >= 1) {
-              waveTriggered = true;
-              section.setAttribute("data-judgement-wave", "true");
-            }
-          }
 
           ticking = false;
         };
