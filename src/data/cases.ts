@@ -255,6 +255,9 @@ export const caseStudies: CaseStudy[] = [
     short: "From media to partner",
     result: "Multiple new revenue streams",
     discipline: "Strategic business development",
+    heroImage:
+      "https://www.voguecollege.com/wp-content/uploads/2024/09/TakeFlight_betty-oxlade-martin-homepage.jpg",
+    heroAlt: "A fashion editorial image from Vogue College's Take Flight project.",
     summary:
       "Vogue's editorial authority became a suite of commercial products - taking the brand from media owner to strategic partner.",
     story: [
@@ -371,6 +374,9 @@ export const caseStudies: CaseStudy[] = [
     short: "Enterprise AI, orchestrated",
     result: "Enterprise platform launched",
     discipline: "Enterprise AI strategy and product ownership",
+    heroImage:
+      "https://cdn.midjourney.com/eb3f3f23-a851-4b2f-bb3f-6780f23bc010/0_2.png",
+    heroAlt: "An abstract visual representing Hitachi's enterprise AI platform.",
     summary:
       "A shared platform brought fragmented AI projects, governance and industrial deployment into one enterprise system.",
     story: [
@@ -457,6 +463,9 @@ export const caseStudies: CaseStudy[] = [
     short: "Who likes. Who buys.",
     result: "New monetisation model",
     discipline: "Product strategy",
+    heroImage:
+      "https://media.vogue.co.uk/photos/5f243a2ce86e508de4dbf7dd/2:3/w_2240,c_limit/Burberry%20Shenzhen%20store%20-%20QR%20codes%20c%20Courtesy%20of%20Burberry_001.jpg",
+    heroAlt: "The digitally enabled Burberry store in Shenzhen.",
     summary:
       "Image recognition was repointed from displaying social content to identifying the people most likely to buy luxury.",
     story: [
